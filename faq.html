@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — SakhiSecure Help & Support</title>
+<meta name="description" content="Find answers to common questions about SakhiSecure — women’s safety features, reporting, volunteering, and platform usage.">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<header>
+<nav>
+    <a href="{{ url_for('index') }}" class="logo">
+        SakhiSecure
+        <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+    </a>
+    <ul class="nav-menu">
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+        <li><a href="{{ url_for('report') }}">Report</a></li>
+        <li><a href="{{ url_for('faq') }}" class="nav-link active">FAQ</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+    </ul>
+    <button class="mobile-toggle">☰</button>
+</nav>
+<style>
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #f3f0f2;
+        text-decoration: none;
+        margin-left: -60px;
+    }
+    .logo-img {
+        width: 55px;
+        height: 55px;
+        margin-left: 6px;
+        object-fit: contain;
+    }
+    nav a.logo:hover { opacity: 0.9; }
+</style>
+</header>
+
+<main>
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Frequently Asked Questions</h1>
+        <p>Get answers to common questions about SakhiSecure features, reporting, and community support.</p>
+    </div>
+</section>
+
+<!-- FAQ Grid -->
+<section class="container" style="margin: 3rem auto;">
+    <h2 style="text-align:center; color: var(--primary-pink); margin-bottom: 2rem;">Top Questions</h2>
+    <div class="grid-2">
+        <div class="card">
+            <h3>⏱️ How quickly do you respond to reports?</h3>
+            <p>Emergency cases are prioritized immediately. For general support, we respond within 24–48 hours during business days.</p>
+        </div>
+        <div class="card">
+            <h3>🔒 Is my data secure?</h3>
+            <p>Yes. All reports and messages are encrypted, and your information is kept strictly confidential as per our Privacy Policy.</p>
+        </div>
+        <div class="card">
+            <h3>📱 Can I use SakhiSecure without internet?</h3>
+            <p>Yes, core SOS features work offline by sending SMS alerts, but real-time tracking and analytics need an active connection.</p>
+        </div>
+        <div class="card">
+            <h3>🤝 How can I volunteer?</h3>
+            <p>You can join our volunteer program to conduct workshops, spread awareness, and support events. 
+               <a href="{{ url_for('volunteer') }}" style="color: var(--primary-pink);">Sign up here</a>.</p>
+        </div>
+        <div class="card">
+            <h3>📊 Can I track past safety alerts?</h3>
+            <p>Yes, your dashboard stores historical alerts and analytics for better insights into your community’s safety trends.</p>
+        </div>
+        <div class="card">
+            <h3>🆘 What should I do in case of emergency?</h3>
+            <p>Use the 🚨 emergency alert button in the app to notify authorities and trusted contacts immediately.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Search FAQ / Submit Question -->
+<section class="container" style="margin: 4rem auto;">
+    <div class="card">
+        <h2 style="text-align:center; color: var(--primary-pink); margin-bottom: 1rem;">Still Have Questions?</h2>
+        <p style="text-align:center; margin-bottom: 2rem;">Use the form below to ask your question directly to our support team.</p>
+
+        <form id="faqForm">
+            <div class="form-group">
+                <label for="faq-name">Your Name *</label>
+                <input type="text" id="faq-name" name="faq-name" required>
+            </div>
+            <div class="form-group">
+                <label for="faq-email">Email Address *</label>
+                <input type="email" id="faq-email" name="faq-email" required>
+            </div>
+            <div class="form-group">
+                <label for="faq-question">Your Question *</label>
+                <textarea id="faq-question" name="faq-question" placeholder="Type your question here..." required></textarea>
+            </div>
+            <button type="submit" class="btn" style="width:100%;">Submit Question</button>
+        </form>
+
+        <p id="formMessage" style="margin-top:1rem; text-align:center; display:none; font-weight:bold; color:green;">
+            ✅ Your question has been submitted successfully. We’ll get back to you soon!
+        </p>
+    </div>
+</section>
+
+<a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+</main>
+
+<footer>
+<div class="footer-content">
+    <div class="footer-grid">
+        <div class="footer-section">
+            <h3>Safety Resources</h3>
+            <ul>
+                <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+
+                <li><a href="{{ url_for('news') }}">Safety News</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Platform</h3>
+            <ul>
+                <li><a href="{{ url_for('features') }}">Features</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Community</h3>
+            <ul>
+                <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                <li><a href="{{ url_for('partners') }}">Partners</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 SakhiSecure. All rights reserved. | Empowering women through safety and technology.</p>
+    </div>
+</div>
+</footer>
+
+<script>
+document.getElementById("faqForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = document.getElementById("faq-name").value.trim();
+    const email = document.getElementById("faq-email").value.trim();
+    const question = document.getElementById("faq-question").value.trim();
+    const messageBox = document.getElementById("formMessage");
+
+    if (!name || !email || !question) {
+        alert("⚠️ Please fill in all required fields.");
+        return;
+    }
+
+    // Simulate successful form submission
+    messageBox.style.display = "block";
+    this.reset();
+});
+</script>
+</body>
+</html>

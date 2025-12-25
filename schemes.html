@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Women Schemes — Support & Empowerment</title>
+<meta name="description" content="Explore government and NGO schemes for women’s empowerment, safety, health, and financial independence.">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<header>
+<nav>
+    <a href="{{ url_for('index') }}" class="logo">
+        SakhiSecure
+        <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+    </a>
+    <ul class="nav-menu">
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+        <li><a href="{{ url_for('report') }}">Report</a></li>
+        <li><a href="{{ url_for('schemes') }}" class="nav-link active">Schemes</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+    </ul>
+    <button class="mobile-toggle">☰</button>
+</nav>
+<style>
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #f3f0f2;
+    text-decoration: none;
+    margin-left: -60px;
+}
+.logo-img {
+    width: 55px;
+    height: 55px;
+    margin-left: 6px;
+    object-fit: contain;
+}
+nav a.logo:hover { opacity: 0.9; }
+</style>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container">
+    <h1>Empowerment Through Government Schemes</h1>
+    <p>Discover a range of initiatives by the Government of India designed to empower women across various sectors.</p>
+  </div>
+</section>
+
+<section class="container">
+  <h2 style="text-align:center; margin:2rem 0; color: var(--primary-pink);">📋 Women Empowerment Schemes</h2>
+  <div class="feature-grid">
+
+    <div class="feature">
+      <h4>Sukanya Samriddhi Yojana (SSY)</h4>
+      <p>Launched under Beti Bachao, Beti Padhao, SSY allows parents to open accounts for their newborn girl child. Tax-free interest, investment up to ₹1.5 lakh annually.</p>
+      <a href="https://pmujjwalayojana.in/beti-bachao-beti-padhao-yojana/" class="btn" target="_blank">Learn More</a>
+    </div>
+
+    <div class="feature">
+      <h4>Lakhpati Didi Scheme</h4>
+      <p>Empowers women in Self-Help Groups (SHGs) to accumulate capital of over ₹1 lakh, targeting 2 crore women.</p>
+      <a href="https://lakhpatididi.gov.in/" class="btn" target="_blank">Learn More</a>
+    </div>
+
+    <div class="feature">
+      <h4>Drone Didi Scheme</h4>
+      <p>Trains 15,000 women SHG workers to become drone pilots for economic activities like deliveries and land mapping.</p>
+      <a href="https://sarkaribhatta.com/drone-didi-scheme/" class="btn" target="_blank">Learn More</a>
+    </div>
+
+    <div class="feature">
+      <h4>Mission Indradhanush</h4>
+      <p>Ensures full immunisation of pregnant women and children, contributing to women’s health and empowerment.</p>
+      <a href="https://vajiramandravi.com/current-affairs/mission-indradhanush-yojana/" class="btn" target="_blank">Learn More</a>
+    </div>
+
+    <div class="feature">
+      <h4>Pradhan Mantri Mudra Yojana (PMMY)</h4>
+      <p>Provides collateral-free loans up to ₹20 lakhs for women entrepreneurs, supporting small business growth.</p>
+      <a href="https://cleartax.in/s/mudra-yojana" class="btn" target="_blank">Learn More</a>
+    </div>
+
+    <div class="feature">
+      <h4>TREAD Scheme</h4>
+      <p>Trade Related Entrepreneurship Assistance to Women (TREAD) provides 30% gov. loans to develop women entrepreneurs.</p>
+      <a href="https://www.bajajfinserv.in/tread-scheme" class="btn" target="_blank">Learn More</a>
+    </div>
+
+    <div class="feature">
+      <h4>Pradhan Mantri Ujjwala Yojana (PMUY)</h4>
+      <p>Provides free gas connections and subsidized cylinders to BPL families, reducing women’s exposure to unsafe cooking fuels.</p>
+      <a href="https://www.pmuy.gov.in/e-kyc.html" class="btn" target="_blank">Learn More</a>
+    </div>
+
+    <div class="feature">
+      <h4>Standup India Mission</h4>
+      <p>Provides loans from ₹10 lakhs to ₹1 crore to SC, ST, and women entrepreneurs, covering up to 75% of project costs.</p>
+      <a href="https://udyogsuvidhakendra.in/startup-india-registration?msclkid=cb15aec0a1ff16fb728cc60e312bbb63" class="btn" target="_blank">Learn More</a>
+    </div>
+
+    <div class="feature">
+      <h4>Mahila E-Haat Scheme</h4>
+      <p>An online marketing platform for women entrepreneurs, self-help groups, and NGOs to sell their products directly to buyers across India, promoting women-led businesses.</p>
+      <a href="https://www.indiafilings.com/learn/mahila-e-haat/" class="btn" target="_blank">Learn More</a>
+    </div>
+    <br>
+
+  </div>
+</section>
+
+<a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+</main>
+
+<footer>
+<div class="footer-content">
+  <div class="footer-grid">
+    <div class="footer-section">
+      <h3>Safety Resources</h3>
+      <ul>
+        <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+        <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+        <li><a href="{{ url_for('defence') }}">Defence Poses</a></li>
+        <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h3>Platform</h3>
+      <ul>
+        <li><a href="{{ url_for('features') }}">Features</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+        <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h3>Community</h3>
+      <ul>
+        <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+        <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+        <li><a href="{{ url_for('partners') }}">Partners</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h3>Legal</h3>
+      <ul>
+        <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+        <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+        <li><a href="{{ url_for('about') }}">About Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 SakhiSecure. All rights reserved. | Empowering women through safety and schemes.</p>
+  </div>
+</div>
+</footer>
+</body>
+</html>

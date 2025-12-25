@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Analysis — SakhiSecure</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        
+
+        /* Form Section */
+        .form-section { max-width: 900px; margin: 0 auto 4rem; }
+        .predict-form {
+            background: #fff; 
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .predict-form label { display:block; margin:0.5rem 0 0.2rem; font-weight:600; }
+        .predict-form select, .predict-form input {
+            width:100%; padding:0.8rem;
+            border-radius:8px; border:1px solid #ddd; margin-bottom:1rem;
+            transition: 0.3s; font-size:1rem;
+        }
+        .predict-form select:focus, .predict-form input:focus { border-color: var(--primary-pink); outline:none; }
+
+        .grid-2 { display:flex; gap:2rem; flex-wrap:wrap; }
+        .grid-2 > div { flex:1; min-width:250px; }
+
+        .btn {
+            background: var(--primary-pink);
+            color: #fff; border:none;
+            padding:0.8rem 1.5rem;
+            font-size:1rem; border-radius:8px;
+            cursor:pointer; transition:0.3s;
+        }
+        .btn:hover { background: var(--accent-pink); }
+
+        /* Result Card */
+        .result-card {
+            margin-top:2rem;
+            background:#fff;
+            padding:1.8rem;
+            border-radius:1rem;
+            box-shadow:0 4px 15px rgba(0,0,0,0.1);
+        }
+        .result-card h2 { margin-bottom:1rem; font-size:1.5rem; }
+        .risk-low { color:limegreen; }
+        .risk-medium { color:orange; }
+        .risk-high { color:red; }
+
+        .details p { margin:0.3rem 0; }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}" class="logo">
+            SakhiSecure
+            <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+        </a>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('dashboard') }}" class="nav-link active">Dashboard</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('report') }}">Report</a></li>
+            <li><a href="{{ url_for('resources') }}">Resources</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+        <button class="mobile-toggle">☰</button>
+    </nav>
+    <style>
+        .logo { display: flex; align-items: center; font-size: 2.2rem; font-weight: bold; color: #f3f0f2; text-decoration: none; margin-left: -60px; }
+        .logo-img { width: 55px; height: 55px; margin-left: 6px; object-fit: contain; }
+        nav a.logo:hover { opacity: 0.9; }
+    </style>
+</header>
+
+<section  class="hero">
+    <div class="container" style="margin-top: 100px;">
+    <h1>Predictive Safety Analysis</h1>
+    <p>AI-powered predictive insights to evaluate the safety level of your surroundings in real-time.</p>
+</div>
+
+</section>
+<br>
+<section class="form-section">
+    <form method="POST" class="predict-form">
+        <div class="grid-2">
+            <div>
+                <label>Time of Day:</label>
+                <select name="time_of_day" required>
+                    <option value="">Select</option>
+                    <option value="morning">Morning</option>
+                    <option value="afternoon">Afternoon</option>
+                    <option value="evening">Evening</option>
+                    <option value="night">Night</option>
+                </select>
+
+                <label>Location Type:</label>
+                <select name="location_type" required>
+                    <option value="">Select</option>
+                    <option value="urban">Urban</option>
+                    <option value="rural">Rural</option>
+                    <option value="isolated">Isolated</option>
+                </select>
+
+                <label>Streetlights Available:</label>
+                <select name="streetlights" required>
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+            <div>
+                <label>Police Patrol Level:</label>
+                <select name="police_patrol" required>
+                    <option value="">Select</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+
+                <label>Crowd Level:</label>
+                <select name="crowd_level" required>
+                    <option value="">Select</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+
+                <label>Distance from Home (km):</label>
+                <input type="number" step="0.1" name="distance" placeholder="e.g. 2.5" required>
+            </div>
+        </div>
+
+        <label>Recent Incidents in Area:</label>
+        <input type="number" name="incidents" placeholder="e.g. 4" required>
+
+        <button type="submit" class="btn">Predict Safety Risk</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result-card">
+        <h2>Predicted Risk Level: <span class="risk-{{ prediction.split()[0]|lower }}">{{ prediction }}</span></h2>
+        <div class="details">
+            <p><strong>Time:</strong> {{ details.time }}</p>
+            <p><strong>Location:</strong> {{ details.location }}</p>
+            <p><strong>Incidents:</strong> {{ details.incidents }}</p>
+            <p><strong>Streetlights:</strong> {{ details.streetlights }}</p>
+            <p><strong>Police Patrol:</strong> {{ details.police }}</p>
+            <p><strong>Crowd Level:</strong> {{ details.crowd }}</p>
+            <p><strong>Distance:</strong> {{ details.distance }} km</p>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Safety Resources</h3>
+                    <ul>
+                        <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                        <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                        <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                        <li><a href="news.html">Safety News</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Platform</h3>
+                    <ul>
+                        <li><a href="{{ url_for('features') }}">Features</a></li>
+                        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                        <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                        <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                        <li><a href="partners.html">Partners</a></li>
+                        <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="{{ url_for('about') }}">About Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SakhiSecure. All rights reserved. | Protecting women through technology.</p>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>

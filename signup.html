@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up — Women Safety Analytics</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, var(--soft-pink), var(--light-pink));
+  }
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    margin: 1rem 0;
+    transition: transform 0.3s ease;
+  }
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  .form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  .btn {
+    background: var(--primary-pink, #e75480);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+  }
+  .btn:hover {
+    background: #d9456f;
+  }
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+  <a href="{{ url_for('index') }}" class="logo">
+    SakhiSecure
+    <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+  </a>
+  <ul class="nav-menu">
+    <li><a href="{{ url_for('index') }}">Home</a></li>
+    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+    <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+    <li><a href="{{ url_for('report') }}">Report</a></li>
+    <li><a href="{{ url_for('resources') }}">Resources</a></li>
+    <li><a href="{{ url_for('about') }}">About</a></li>
+    <li><a href="{{ url_for('signup') }}" class="nav-link active">Signup</a></li>
+  </ul>
+  <button class="mobile-toggle">☰</button>
+</nav>
+<style>
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #f3f0f2;
+  text-decoration: none;
+  margin-left: -60px;
+}
+.logo-img {
+  width: 55px;
+  height: 55px;
+  margin-left: 6px;
+  object-fit: contain;
+}
+nav a.logo:hover { opacity: 0.9; }
+</style>
+</header>
+
+<main>
+<section class="container" style="max-width: 550px; margin-top: 130px; margin-bottom: 50px;">
+  <div class="card">
+    <h2 style="text-align:center; color: var(--primary-pink);">Create Account</h2>
+  <form action="{{ url_for('signup') }}" method="post">
+
+      
+      <div class="form-group">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required>
+      </div>
+
+      <div class="form-group">
+        <label for="profession">Working Profession</label>
+        <input type="text" id="profession" name="profession" placeholder="E.g., Student, Teacher, Engineer" required>
+      </div>
+
+      <div class="form-group">
+        <label for="area">Location - Area</label>
+        <input type="text" id="area" name="area" placeholder="Enter your local area" required>
+      </div>
+
+      <div class="form-group">
+        <label for="city">Location - City</label>
+        <input type="text" id="city" name="city" placeholder="Enter your city" required>
+      </div>
+
+      <div class="form-group">
+        <label for="state">Location - State</label>
+        <input type="text" id="state" name="state" placeholder="Enter your state" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+      </div>
+
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" placeholder="Enter your age">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Create a password" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter your password" required>
+      </div>
+
+      <button type="submit" class="btn">Sign Up</button>
+    </form>
+    <p style="text-align:center; margin-top:1rem;">
+      Already have an account? 
+      <a href="{{ url_for('login') }}" style="color: var(--primary-pink);">Login</a>
+    </p>
+  </div>
+</section>
+</main>
+
+</body>
+</html>

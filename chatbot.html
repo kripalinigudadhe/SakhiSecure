@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SakhiSecure Women Assistant</title>
+<meta name="description" content="Interactive chatbot assistant for women's safety and guidance.">
+<!-- Load CSS from static folder -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<style>
+.chat-container { max-width:500px; margin:2rem auto; margin-top:150px; padding:1rem; border:2px solid #ee57a3; border-radius:12px; background:#ee95b3; }
+.chat-header { background:#cb3567 ; color:white; padding:20px; border-radius:20px 20px 0 0; font-size:22px; font-weight:bold; text-align:center; }
+.chat-messages { height:300px; overflow-y:auto; margin-bottom:1rem; padding:0.5rem; border:1px solid #fffeff; border-radius:8px; background:#fff; display:flex; flex-direction:column; }
+.message { margin:0.5rem 0; padding:0.5rem 0.75rem; border-radius:8px; max-width:80%; word-wrap:break-word; }
+.message.user { background:#ce2b61; color:#fff; align-self:flex-end; margin-left:auto; }
+.message.bot { background:#ffe6f0; color:#333; align-self:flex-start; margin-right:auto; }
+.chat-input { display:flex; gap:0.5rem; }
+.chat-input input { flex:1; padding:0.5rem; border-radius:8px; border:1px solid #f3f0f2; }
+.chat-input button { padding:0.5rem 1rem; border:none; border-radius:8px; background:#ce2b61; color:#fff; cursor:pointer; }
+.chat-input button:hover { opacity:0.9; }
+</style>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}" class="logo">
+               SakhiSecure
+            <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+        </a>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('report') }}">Report</a></li>
+            <li><a href="{{ url_for('chatbot') }}" class="nav-link active">Chatbot</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+        <button class="mobile-toggle">☰</button>
+    </nav>
+    <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #f3f0f2;
+            text-decoration: none;
+            margin-left: -60px;
+        }
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            margin-left: 6px;
+            object-fit: contain;
+        }
+        nav a.logo:hover { opacity: 0.9; }
+    </style>
+    
+</header>
+
+<section class="chat-container">
+    <div class="chat-header"><h2>EduTrack Chatbot <span style="font-size:1.3em;">🤖</span></h2></div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Type your message..." />
+        <button id="sendBtn">Send</button>
+    </div>
+</section>
+
+<script>
+const chatMessages = document.getElementById('chatMessages');
+const userInput = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+
+function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message', sender);
+    msgDiv.textContent = text;
+    chatMessages.appendChild(msgDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+async function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+    appendMessage(message, 'user');
+    userInput.value = '';
+    try {
+        // <-- Updated endpoint here -->
+        const res = await fetch('{{ url_for("chat") }}', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({message})
+        });
+        const data = await res.json();
+        if (data.reply) appendMessage(data.reply, 'bot');
+        else appendMessage(`⚠️ ${data.error}`, 'bot');
+    } catch (err) {
+        appendMessage('⚠️ Server error. Please try again.', 'bot');
+        console.error(err);
+    }
+}
+
+sendBtn.addEventListener('click', sendMessage);
+userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+</script>
+</body>
+</html>

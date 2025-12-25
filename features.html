@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Features — Real-time Alerts & Predictive Safety Insights</title>
+<meta name="description" content="Explore advanced safety features including real-time alerts, predictive analytics, and community protection tools.">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+<!-- Leaflet CSS for maps -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-sA+gP34yAoHxP3pI2b0FJcZzD+V5W/4vM+gZMXEwMVM=" crossorigin=""/>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1j+gsy1kldUXsh/54K4s4hF3tR8DhrLPTVb7j6wY=" crossorigin=""></script>
+
+<style>
+    .logo { display: flex; align-items: center; font-size: 2.2rem; font-weight: bold; color: #f3f0f2; text-decoration: none; margin-left: -60px; }
+    .logo-img { width: 55px; height: 55px; margin-left: 6px; object-fit: contain; }
+    nav a.logo:hover { opacity: 0.9; }
+
+    .map-container { height: 300px; border-radius: 10px; border: 1px solid #ccc; }
+    .chart-container { height: 300px; width: 100%; }
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+    <a href="{{ url_for('index') }}" class="logo">
+        SakhiSecure
+        <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+    </a>
+    <ul class="nav-menu">
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+        <li><a href="{{ url_for('report') }}">Report</a></li>
+        <li><a href="{{ url_for('features') }}" class="nav-link active">Features</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+    </ul>
+    <button class="mobile-toggle">☰</button>
+</nav>
+</header>
+
+<main>
+<section class="hero">
+    <div class="container">
+        <h1>Advanced Safety Features</h1>
+        <p>Comprehensive protection through intelligent technology and community support</p>
+    </div>
+</section>
+
+<section class="container">
+    <div class="grid grid-2" style="margin-top: 3rem;">
+        <div class="card">
+            <h3>🚨 Real-Time Alert System</h3>
+            <p><strong>Instant Notifications:</strong> Receive immediate alerts about potential safety threats in your vicinity based on live data analysis.</p>
+            <h4 style="color: var(--primary-pink); margin: 1.5rem 0 0.5rem;">Key Features:</h4>
+            <ul>
+                <li>GPS-based location monitoring</li>
+                <li>Crowd-sourced incident reporting</li>
+                <li>Emergency contact auto-notification</li>
+                <li>One-touch emergency calling</li>
+                <li>Silent alarm activation</li>
+            </ul>
+            <div style="margin-top: 1rem;">
+                <span class="btn" style="background: #28a745;">Active 24/7</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🔍 Predictive Safety Analytics</h3>
+            <p><strong>AI-Powered Insights:</strong> Advanced algorithms analyze patterns to predict unsafe situations before they occur.</p>
+            <h4 style="color: var(--primary-pink); margin: 1.5rem 0 0.5rem;">Capabilities:</h4>
+            <ul>
+                <li>Route safety scoring</li>
+                <li>Time-based risk assessment</li>
+                <li>Behavioral pattern analysis</li>
+                <li>Environmental factor monitoring</li>
+                <li>Personalized safety recommendations</li>
+            </ul>
+            <div style="margin-top: 1rem;">
+                <span class="btn" style="background: var(--accent-pink);">95% Accuracy</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Advanced Analytics Features -->
+<section style="margin: 4rem 0;">
+    <h2 style="text-align: center; color: var(--primary-pink); margin-bottom: 3rem;">Advanced Analytics Features</h2>
+    <div class="grid grid-2">
+        <div class="card">
+            <h3>📈 Safety Trend Analysis</h3>
+            <p>Detailed insights into local safety patterns, incident frequency, and risk factors over time.</p>
+            <div class="chart-container">
+                <canvas id="safetyTrendChart"></canvas>
+            </div>
+            <a href="{{ url_for('analytics') }}" class="btn" style="margin-top:1rem;">View Full Analytics</a>
+        </div>
+
+        <div class="card">
+            <h3>🗂 Women Crime Trend</h3>
+            <p>Year-wise statistics of reported women crime incidents to understand rising trends.</p>
+            <div class="chart-container">
+                <canvas id="crimeTrendChart"></canvas>
+            </div>
+            <a href="{{ url_for('analytics') }}" class="btn" style="margin-top:1rem;">View Full Report</a>
+        </div>
+    </div>
+</section>
+
+<script>
+// -------- Safety Trend Chart using Chart.js --------
+const ctx1 = document.getElementById('safetyTrendChart').getContext('2d');
+const safetyTrendChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], // example months
+        datasets: [{
+            label: 'Incidents Reported',
+            data: [12, 19, 7, 15, 10, 5, 8], // example data
+            backgroundColor: 'rgba(233,30,99,0.2)',
+            borderColor: 'rgba(233,30,99,1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.3
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true },
+            title: { display: false }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+// -------- Women Crime Trend Chart using Chart.js --------
+const ctx2 = document.getElementById('crimeTrendChart').getContext('2d');
+const crimeTrendChart = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+        datasets: [{
+            label: 'Reported Women Crime Incidents',
+            data: [450, 520, 610, 700, 750, 820, 900], // example yearly data
+            backgroundColor: 'rgba(233,30,99,0.6)',
+            borderColor: 'rgba(233,30,99,1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Women Crime Incidents per Year' }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: { display: true, text: 'Number of Incidents' }
+            },
+            x: {
+                title: { display: true, text: 'Year' }
+            }
+        }
+    }
+});
+</script>
+
+
+<a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+</main>
+
+<footer>
+<div class="footer-content">
+    <div class="footer-grid">
+        <div class="footer-section">
+            <h3>Safety Resources</h3>
+            <ul>
+                <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                <li><a href="{{ url_for('news') }}">Safety News</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Platform</h3>
+            <ul>
+                <li><a href="{{ url_for('features') }}">Features</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Community</h3>
+            <ul>
+                <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                <li><a href="{{ url_for('partners') }}">Partners</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 SakhiSecure. All rights reserved. | Protecting women through technology.</p>
+    </div>
+</div>
+</footer>
+
+<script>
+// -------- Safety Trend Chart using Chart.js --------
+const ctx = document.getElementById('safetyTrendChart').getContext('2d');
+const safetyTrendChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], // example months
+        datasets: [{
+            label: 'Incidents Reported',
+            data: [12, 19, 7, 15, 10, 5, 8], // example data
+            backgroundColor: 'rgba(233,30,99,0.2)',
+            borderColor: 'rgba(233,30,99,1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.3
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true },
+            title: { display: false }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+// -------- Safety Heatmap using Leaflet.js --------
+const map = L.map('safetyMap').setView([28.6139, 77.2090], 12); // Default: Delhi
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+// Example safety markers
+const safetyMarkers = [
+    { lat: 28.6139, lng: 77.2090, risk: 'High' },
+    { lat: 28.6200, lng: 77.2150, risk: 'Medium' },
+    { lat: 28.6250, lng: 77.2050, risk: 'Low' },
+];
+
+safetyMarkers.forEach(marker => {
+    let color = marker.risk === 'High' ? 'red' : marker.risk === 'Medium' ? 'orange' : 'green';
+    L.circle([marker.lat, marker.lng], {
+        color: color,
+        fillColor: color,
+        fillOpacity: 0.5,
+        radius: 500
+    }).addTo(map).bindPopup(`<strong>Risk Level:</strong> ${marker.risk}`);
+});
+</script>
+</body>
+</html>

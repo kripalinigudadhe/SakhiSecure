@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Volunteer — Support Women’s Safety</title>
+<meta name="description" content="Join as a volunteer to support women’s safety initiatives, awareness campaigns, and community programs.">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<style>
+/* Navbar logo */
+.logo { display:flex; align-items:center; font-size:2.2rem; font-weight:bold; color:#f3f0f2; text-decoration:none; margin-left:-60px; }
+.logo-img { width:55px; height:55px; margin-left:6px; object-fit:contain; }
+nav a.logo:hover { opacity:0.9; }
+
+/* Cards, grids, forms */
+.card { background:white; padding:1.5rem; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); margin-bottom:2rem; }
+.grid-3 { display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; }
+.grid-2 { display:flex; flex-wrap:wrap; gap:1rem; }
+.form-group { margin-bottom:1rem; flex:1 1 200px; }
+.btn { background:var(--primary-pink,#e91e63); color:white; border:none; padding:0.7rem 1.2rem; border-radius:6px; cursor:pointer; }
+.btn:hover { background:#d81b60; }
+.emergency-btn { position:fixed; bottom:20px; right:20px; font-size:2.2rem; text-decoration:none; }
+
+/* Flash messages */
+.flash-message { text-align:center; font-weight:bold; margin-top:1rem; }
+.flash-success { color:green; }
+.flash-error { color:red; }
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+  <a href="{{ url_for('index') }}" class="logo">
+    SakhiSecure
+    <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+  </a>
+  <ul class="nav-menu">
+    <li><a href="{{ url_for('index') }}">Home</a></li>
+    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+    <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+    <li><a href="{{ url_for('report') }}">Report</a></li>
+    <li><a href="{{ url_for('volunteer') }}" class="nav-link active">Volunteer</a></li>
+    <li><a href="{{ url_for('about') }}">About</a></li>
+    <li><a href="{{ url_for('login') }}">Login</a></li>
+  </ul>
+  <button class="mobile-toggle">☰</button>
+</nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container">
+    <h1>Become a Volunteer</h1>
+    <p>Join hands with us to create safer communities and empower women everywhere</p>
+  </div>
+</section>
+
+<section class="container" style="margin-top: 4rem;">
+  <h2 style="color: var(--primary-pink); text-align:center; margin-top:4rem; margin-bottom:2rem;">Why Volunteer with SakhiSecure?</h2>
+  <div class="grid-3">
+    <div class="card">
+      <h3>🤝 Community Impact</h3>
+      <p>Help spread awareness, conduct workshops, and build safer neighborhoods for women.</p>
+    </div>
+    <div class="card">
+      <h3>📢 Advocacy & Awareness</h3>
+      <p>Be the voice that promotes gender equality, women’s rights, and safety practices.</p>
+    </div>
+    <div class="card">
+      <h3>🎓 Skill Development</h3>
+      <p>Gain leadership, communication, and teamwork skills while making a difference.</p>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <h2 style="text-align:center; color: var(--primary-pink); margin-bottom:1rem;">Volunteer Roles</h2>
+  <div class="grid-3">
+    <div class="card">
+      <h3>📍 Local Safety Ambassador</h3>
+      <ul>
+        <li>Organize community safety drives</li>
+        <li>Spread awareness about self-defense</li>
+        <li>Connect with local NGOs</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>💻 Digital Advocate</h3>
+      <ul>
+        <li>Promote online safety campaigns</li>
+        <li>Manage awareness posts on social media</li>
+        <li>Support with digital outreach</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎤 Event Volunteer</h3>
+      <ul>
+        <li>Assist in awareness workshops</li>
+        <li>Help in training & outreach programs</li>
+        <li>Support safety events logistics</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="container" style="margin-top: 4rem;">
+  <div class="card">
+    <h2 style="color: var(--primary-pink); text-align:center; margin-bottom:1.5rem;">🤝 Volunteer With SakhiSecure</h2>
+    <p style="text-align:center; margin-bottom:2rem;">Join our network of volunteers and help us create safer communities for women. Fill out the form below to get started.</p>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-message">
+          {% for category, message in messages %}
+            <p class="flash-{{ category }}">{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Volunteer Form -->
+    <form action="{{ url_for('volunteer') }}" method="POST">
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="vol-name">Full Name *</label>
+          <input type="text" id="vol-name" name="vol-name" required>
+        </div>
+        <div class="form-group">
+          <label for="vol-email">Email Address *</label>
+          <input type="email" id="vol-email" name="vol-email" required>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label for="vol-phone">Phone Number *</label>
+          <input type="tel" id="vol-phone" name="vol-phone" required>
+        </div>
+        <div class="form-group">
+          <label for="vol-city">City / Location *</label>
+          <input type="text" id="vol-city" name="vol-city" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="vol-area">Area of Interest *</label>
+        <select id="vol-area" name="vol-area" required>
+          <option value="">-- Select --</option>
+          <option value="awareness">Awareness Campaigns</option>
+          <option value="training">Workshops & Training</option>
+          <option value="tech">Tech & Platform Support</option>
+          <option value="emergency">Emergency Response</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="vol-message">Why do you want to volunteer?</label>
+        <textarea id="vol-message" name="vol-message" placeholder="Share a few lines about your motivation..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" name="updates" style="margin-right:0.5rem;">
+          Keep me updated with volunteering events & opportunities
+        </label>
+      </div>
+
+      <button type="submit" class="btn" style="width:100%; margin-top:1rem;">Submit Volunteer Application</button>
+    </form>
+  </div>
+</section>
+
+<!-- Registered Volunteers Section -->
+<section class="container" style="margin-top: 4rem;">
+  <h2 style="color: var(--primary-pink); text-align:center; margin-bottom:2rem;">👥 Registered Volunteers</h2>
+  <div class="grid-3">
+    {% if volunteers %}
+      {% for vol in volunteers %}
+        <div class="card">
+          <h3>{{ vol.fullname }}</h3>
+          <p><strong>Email:</strong> {{ vol.email }}</p>
+          <p><strong>Phone:</strong> {{ vol.phone }}</p>
+          <p><strong>City:</strong> {{ vol.city }}</p>
+          <p><strong>Area of Interest:</strong> {{ vol.area_interest }}</p>
+          <p><strong>Wants Updates:</strong> {{ 'Yes' if vol.updates else 'No' }}</p>
+          <p><strong>Message:</strong> {{ vol.message }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p style="text-align:center; font-style:italic;">No volunteers registered yet.</p>
+    {% endif %}
+  </div>
+</section>
+
+<a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h3>Safety Resources</h3>
+        <ul>
+          <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+          <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+          <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+          <li><a href="{{ url_for('news') }}">Safety News</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Platform</h3>
+        <ul>
+          <li><a href="{{ url_for('features') }}">Features</a></li>
+          <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+          <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+          <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+          <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+          <li><a href="{{ url_for('partners') }}">Partners</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+          <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+          <li><a href="{{ url_for('about') }}">About Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 SakhiSecure. All rights reserved. | Empowering women through safety and technology.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
