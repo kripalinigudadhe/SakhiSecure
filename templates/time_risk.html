@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time-Based Risk Alerts — SakhiSecure</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<style>
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .form-group { margin-bottom: 1rem; }
+    .form-group input, .form-group select, .form-group textarea {
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-top: 0.3rem;
+    }
+    .btn {
+        background: var(--primary-pink, #e91e63);
+        color: white;
+        border: none;
+        padding: 0.7rem 1.2rem;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 0.5rem;
+    }
+    .btn:hover { background: #d81b60; }
+    .alert { padding: 0.7rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
+    .alert-danger { background: #f8d7da; color: #721c24; }
+    .alert-warning { background: #fff3cd; color: #856404; }
+    .alert-success { background: #d4edda; color: #155724; }
+</style>
+</head>
+<body>
+<header>
+<nav>
+  <a href="{{ url_for('index') }}" class="logo">
+    SakhiSecure
+    <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+  </a>
+  <ul class="nav-menu">
+    <li><a href="{{ url_for('index') }}">Home</a></li>
+    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+    <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+    <li><a href="{{ url_for('report') }}">Report</a></li>
+    <li><a href="{{ url_for('resources') }}">Resources</a></li>
+    <li><a href="{{ url_for('about') }}" class="nav-link active">About</a></li>
+    <li><a href="{{ url_for('login') }}">Login</a></li>
+  </ul>
+  <button class="mobile-toggle">☰</button>
+</nav>
+<style>
+.logo { display:flex; align-items:center; font-size:2.2rem; font-weight:bold; color:#f3f0f2; text-decoration:none; margin-left:-60px; }
+.logo-img { width:55px; height:55px; margin-left:6px; object-fit:contain; }
+nav a.logo:hover { opacity:0.9; }
+</style>
+</header>
+
+<main class="container">
+<section class="hero">
+    <h1>Time-Based Risk Alerts</h1>
+    <p>Stay safe with real-time notifications about unsafe times of day based on local crime trends and patterns in your area.</p>
+</section>
+
+<section class="card">
+    <h2>Submit Custom Risk Alert</h2>
+    <form id="riskForm">
+        <div class="form-group">
+            <label for="option">Select Option:</label>
+            <select id="option" name="option">
+                <option value="default">Default</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="customInputs" style="display:none;">
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required>
+            <label for="place">Place:</label>
+            <input type="text" id="place" name="place" placeholder="Enter location" required>
+            <label for="danger">Danger at this place:</label>
+            <textarea id="danger" name="danger" placeholder="Describe the danger..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn">Submit Alert</button>
+    </form>
+</section>
+
+<section class="card">
+    <h3>Submitted Alerts</h3>
+    <ul id="submittedAlerts"></ul>
+</section>
+
+<section class="card">
+    <h2>Real-Time Safety Alerts</h2>
+    <div class="alert alert-info" id="risk-alert">Loading your risk status...</div>
+
+    <h3>Today's Risk Schedule</h3>
+    <ul id="risk-schedule"></ul>
+
+    <h3>Safe Hours</h3>
+    <p>Plan your outdoor activities during low-risk periods to reduce exposure to potential threats.</p>
+</section>
+
+<a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+</main>
+<br>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>SakhiSecure</h3>
+                <p>Empowering women with proactive safety monitoring and risk alerts.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('features') }}">Features</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li>Email: support@sakhisecure.com</li>
+                    <li>Phone: +91 9876543210</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">&copy; 2025 SakhiSecure. All Rights Reserved.</div>
+    </div>
+</footer>
+
+<script>
+const toggleButton = document.querySelector('.mobile-toggle');
+const navMenu = document.querySelector('.nav-menu');
+toggleButton.addEventListener('click', () => { navMenu.classList.toggle('active'); });
+
+const optionSelect = document.getElementById('option');
+const customInputs = document.getElementById('customInputs');
+const riskForm = document.getElementById('riskForm');
+const submittedAlerts = document.getElementById('submittedAlerts');
+
+optionSelect.addEventListener('change', () => {
+    customInputs.style.display = (optionSelect.value === 'custom') ? 'block' : 'none';
+});
+
+const defaultRiskAlerts = [
+    { time: '12:00 AM - 5:59 AM', level: 'High Risk' },
+    { time: '6:00 AM - 11:59 AM', level: 'Low Risk' },
+    { time: '12:00 PM - 4:59 PM', level: 'Medium Risk' },
+    { time: '5:00 PM - 7:59 PM', level: 'Medium Risk' },
+    { time: '8:00 PM - 11:59 PM', level: 'High Risk' }
+];
+
+riskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const option = optionSelect.value;
+
+    if(option === 'default'){
+        submittedAlerts.innerHTML = '';
+        defaultRiskAlerts.forEach(alert => {
+            const li = document.createElement('li');
+            li.textContent = `Time: ${alert.time} — ${alert.level}`;
+            li.style.color = alert.level === 'High Risk' ? '#dc3545' : alert.level === 'Medium Risk' ? '#ffc107' : '#28a745';
+            submittedAlerts.appendChild(li);
+        });
+    } else {
+        const time = document.getElementById('time').value;
+        const place = document.getElementById('place').value.trim();
+        const danger = document.getElementById('danger').value.trim();
+        if(time && place && danger){
+            const li = document.createElement('li');
+            li.textContent = `Time: ${time}, Place: ${place}, Danger: ${danger}`;
+            li.style.color = '#ad1457';
+            submittedAlerts.appendChild(li);
+            riskForm.reset();
+            customInputs.style.display = 'none';
+        } else alert('Please fill in all custom fields.');
+    }
+});
+
+const riskSchedule = defaultRiskAlerts;
+const riskAlertEl = document.getElementById('risk-alert');
+const scheduleEl = document.getElementById('risk-schedule');
+
+riskSchedule.forEach(slot => {
+    const li = document.createElement('li');
+    li.textContent = `${slot.time} — ${slot.level}`;
+    scheduleEl.appendChild(li);
+});
+
+function getCurrentRisk(){
+    const now = new Date();
+    const hour = now.getHours();
+    let currentRisk = '';
+    if(hour >= 0 && hour < 6) currentRisk='High Risk';
+    else if(hour >=6 && hour<12) currentRisk='Low Risk';
+    else if(hour>=12 && hour<17) currentRisk='Medium Risk';
+    else if(hour>=17 && hour<20) currentRisk='Medium Risk';
+    else currentRisk='High Risk';
+    riskAlertEl.textContent=`Current Time: ${now.toLocaleTimeString()} — ${currentRisk}`;
+    riskAlertEl.className = currentRisk==='High Risk'? 'alert alert-danger' : currentRisk==='Medium Risk'? 'alert alert-warning' : 'alert alert-success';
+}
+getCurrentRisk();
+setInterval(getCurrentRisk,60000);
+</script>
+</body>
+</html>

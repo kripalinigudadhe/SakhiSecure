@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Safety Alerts — Stay Protected</title>
+    <meta name="description" content="Receive real-time safety alerts, notifications, and recommendations to stay protected wherever you are.">
+    <!-- Correct CSS path -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('index') }}" class="logo">
+                SakhiSecure
+                <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                <li><a href="{{ url_for('report') }}">Report</a></li>
+                <li><a href="{{ url_for('alert') }}" class="nav-link active">Alerts</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+            </ul>
+            <button class="mobile-toggle">☰</button>
+        </nav>
+        <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #f3f0f2;
+            text-decoration: none;
+            margin-left: -60px;
+        }
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            margin-left: 6px;
+            object-fit: contain;
+        }
+        nav a.logo:hover { opacity: 0.9; }
+        </style>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Receive Smart Alerts</h1>
+                <p>Get timely notifications and safety recommendations to help you stay protected.</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="grid grid-2" style="margin: 3rem 0; align-items: start;">
+                <div>
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-pink);">🚨 Active Safety Alerts</h3>
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            <div class="alert alert-warning" style="margin: 1rem 0;">
+                                <strong>⚠️ Caution: Connaught Place Metro</strong><br>
+                                Increased harassment cases reported after 8 PM. Stay alert and travel in groups.
+                                <br><small>Generated: 15 mins ago • High Severity</small>
+                            </div>
+                            <div class="alert alert-info" style="margin: 1rem 0;">
+                                <strong>💡 Recommendation: Khan Market</strong><br>
+                                Use well-lit exits near Gate 3. Security patrol active till 11 PM.
+                                <br><small>Generated: 30 mins ago • Medium Severity</small>
+                            </div>
+                            <div class="alert alert-success" style="margin: 1rem 0;">
+                                <strong>✅ All Clear: Green Park</strong><br>
+                                Area safe for travel. Recent police patrol completed.
+                                <br><small>Generated: 1 hour ago • Low Severity</small>
+                            </div>
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 1rem;">View </button>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-pink);">🔔 How Alerts Work</h3>
+                        <p>
+                            Our system collects data from community reports, incident trends, and official updates 
+                            to generate <strong>Smart Safety Alerts</strong>. These alerts notify you about unsafe 
+                            zones, provide travel recommendations, and highlight safer routes in real-time.
+                        </p>
+                        <ul style="margin: 1rem 0;">
+                            <li>📍 Location-based alerts customized for you</li>
+                            <li>⚡ Instant push notifications on mobile</li>
+                            <li>🔒 Anonymous and privacy-protected system</li>
+                            <li>🤝 Verified by trusted community moderators</li>
+                        </ul>
+                        <button class="btn btn-secondary">Manage Alert Settings</button>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--primary-pink);">📈 Alert Statistics</h3>
+                        <div class="dashboard-stats">
+                            <div class="stat-card">
+                                <span class="stat-number">523</span>
+                                <span class="stat-label">Active Alerts</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number">89%</span>
+                                <span class="stat-label">Accuracy Verified</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number">12</span>
+                                <span class="stat-label">New Alerts Today</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number">24/7</span>
+                                <span class="stat-label">Monitoring Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="card" style="margin: 1rem 0;">
+                <h2 style="color: var(--primary-pink); text-align: center; margin-bottom: 2rem;">📞 Emergency Contacts</h2>
+                <div class="grid grid-2" style="gap: 1.5rem;">
+                    <div class="contact-card">
+                        <h3>🚓 Police</h3>
+                        <p>100</p>
+                        <button class="btn" onclick="window.location.href='tel:100'">Call Now</button>
+                    </div>
+                    <div class="contact-card">
+                        <h3>🚑 Ambulance</h3>
+                        <p>102</p>
+                        <button class="btn" onclick="window.location.href='tel:102'">Call Now</button>
+                    </div>
+                    <div class="contact-card">
+                        <h3>👩‍🦰 Women’s Helpline</h3>
+                        <p>1091</p>
+                        <button class="btn" onclick="window.location.href='tel:1091'">Call Now</button>
+                    </div>
+                    <div class="contact-card">
+                        <h3>🚨 National Emergency</h3>
+                        <p>112</p>
+                        <button class="btn" onclick="window.location.href='tel:112'">Call Now</button>
+                    </div>
+                    <div class="contact-card">
+                        <h3>🚨 Child Helpline</h3>
+                        <p>1098</p>
+                        <button class="btn" onclick="window.location.href='tel:1098'">Call Now</button>
+                    </div>
+                    <div class="contact-card">
+                        <h3>🧪 Acid Attack Helpline</h3>
+                        <p>1092</p>
+                        <button class="btn" onclick="window.location.href='tel:1092'">Call Now</button>
+                    </div>
+                </div>
+            </section>
+            <section class="card" style="margin: 3rem 0;">
+    <h2 style="color: var(--primary-pink); text-align: center; margin-bottom: 2rem;">📱 Add Your Emergency Contact</h2>
+    <form id="emergencyContactForm" style="max-width: 600px; margin: 0 auto; text-align: left;">
+        <div style="margin-bottom: 1rem;">
+            <label for="contactName" style="font-weight: bold;">Full Name</label>
+            <input type="text" id="contactName" name="contactName" placeholder="Enter full name" required 
+                style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-top: 6px;">
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <label for="contactNumber" style="font-weight: bold;">Phone Number</label>
+            <input type="tel" id="contactNumber" name="contactNumber" placeholder="Enter phone number" required 
+                style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-top: 6px;">
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+            <label for="relationship" style="font-weight: bold;">Relationship</label>
+            <select id="relationship" name="relationship" required
+                style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-top: 6px;">
+                <option value="" disabled selected>Select relationship</option>
+                <option value="Father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Brother">Brother</option>
+                <option value="Sister">Sister</option>
+                <option value="Friend">Friend</option>
+                <option value="Relative">Relative</option>
+            </select>
+        </div>
+
+        <button type="button" class="btn" style="width: 100%;" onclick="saveContact()">Save Contact</button>
+    </form>
+
+    <div id="savedContacts" style="margin-top: 2rem;">
+        <h3 style="color: var(--primary-pink); text-align: center;">Your Saved Contacts</h3>
+        <ul id="contactList" style="list-style: none; padding: 0; text-align: center; margin-top: 1rem;">
+            <!-- Saved contacts will appear here -->
+        </ul>
+    </div>
+</section>
+
+
+            <section class="card" style="margin: 4rem 0; text-align: center;">
+                <h2 style="color: var(--primary-pink); margin-bottom: 1rem;">Stay Ahead with Smart Alerts</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                    Enable alerts to receive instant safety updates, route recommendations, and 
+                    timely warnings based on your location.
+                </p>
+                <div>
+                    <a href="{{ url_for('signup') }}" class="btn">Enable Alerts</a>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Go to Dashboard</a>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Safety Resources</h3>
+                    <ul>
+                        <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                        <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                        <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                        <li><a href="news.html">Safety News</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Platform</h3>
+                    <ul>
+                        <li><a href="{{ url_for('features') }}">Features</a></li>
+                        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                        <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Community</h3>
+                    <ul>
+                        <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                        <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                        <li><a href="partners.html">Partners</a></li>
+                        <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="{{ url_for('about') }}">About Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SakhiSecure. All rights reserved. | Protecting women through technology.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Correct JS path -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+function saveContact() {
+    const name = document.getElementById('contactName').value.trim();
+    const number = document.getElementById('contactNumber').value.trim();
+    const relation = document.getElementById('relationship').value;
+
+    if (!name || !number || !relation) {
+        alert('Please fill out all fields.');
+        return;
+    }
+
+    const list = document.getElementById('contactList');
+    const item = document.createElement('li');
+    item.style.margin = "0.5rem 0";
+    item.innerHTML = `📞 <strong>${relation}</strong>: ${name} — <a href="tel:${number}">${number}</a>`;
+    list.appendChild(item);
+
+    document.getElementById('emergencyContactForm').reset();
+    alert('Emergency contact added successfully!');
+}
+</script>
+
+</body>
+</html>

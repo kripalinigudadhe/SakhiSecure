@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — Women Safety Analytics</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, var(--soft-pink), var(--light-pink));
+    margin: 0;
+    padding: 0;
+}
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    margin: 1rem 0;
+    transition: transform 0.3s ease;
+}
+/* Flash message styles */
+.flash-messages {
+    margin: 1rem 0;
+}
+.alert {
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+}
+.alert-error, .alert-danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+    <a href="{{ url_for('index') }}" class="logo">
+        SakhiSecure
+        <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+    </a>
+    <ul class="nav-menu">
+        <li><a href="{{ url_for('index') }}" class="nav-link">Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+        <li><a href="{{ url_for('report') }}">Report</a></li>
+        <li><a href="{{ url_for('resources') }}">Resources</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('login') }}" class="nav-link active">Login</a></li>
+    </ul>
+    <button class="mobile-toggle">☰</button>
+</nav>
+<style>
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #f3f0f2;
+    text-decoration: none;
+    margin-left: -60px;
+}
+.logo-img {
+    width: 55px;
+    height: 55px;
+    margin-left: 6px;
+    object-fit: contain;
+}
+nav a.logo:hover { opacity: 0.9; }
+</style>
+</header>
+
+<main>
+<section class="container" style="max-width: 500px; margin-top:130px; margin-bottom: 100px;">
+  <div class="card">
+
+    <!-- 🔔 Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <h2 style="text-align:center; color: var(--primary-pink);">Login</h2>
+    <form action="{{ url_for('login') }}" method="post">
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+
+      <button type="submit" class="btn" style="width:100%;">Login</button>
+      <a href="{{ url_for('forgot_password') }}" class="btn btn-secondary" style="display:block; text-align:center; margin-top:10px;">Forgot Password?</a>
+    </form>
+    <p style="text-align:center; margin-top:1rem;">Don't have an account? 
+      <a href="{{ url_for('signup') }}" style="color: var(--primary-pink); font-weight:bold;">Sign Up</a>
+    </p>
+  </div>
+</section>
+</main>
+
+</body>
+</html>

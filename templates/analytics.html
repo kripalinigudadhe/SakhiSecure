@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics — Women Safety Trends & Reports</title>
+    <meta name="description" content="Detailed analytics on incidents, trends, severity, and community insights to enhance women's safety.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header>
+<nav>
+    <a href="{{ url_for('index') }}" class="logo">
+        SakhiSecure
+        <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+    </a>
+    <ul class="nav-menu">
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('analytics') }}" class="nav-link active">Analytics</a></li>
+        <li><a href="{{ url_for('report') }}">Report</a></li>
+        <li><a href="{{ url_for('resources') }}">Resources</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+    </ul>
+    <button class="mobile-toggle">☰</button>
+</nav>
+
+<style>
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #f3f0f2;
+    text-decoration: none;
+    margin-left: -60px;
+}
+.logo-img {
+    width: 55px;
+    height: 55px;
+    margin-left: 6px;
+    object-fit: contain;
+}
+nav a.logo:hover { opacity: 0.9; }
+</style>
+</header>
+
+<script>
+    // Mobile menu toggle
+    const toggleBtn = document.querySelector('.mobile-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    toggleBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('show');
+    });
+</script>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <h1>Analytics & Incident Reports</h1>
+            <p>Visualize safety patterns, track incidents, and gain predictive insights to stay protected.</p>
+        </div>
+    </section>
+
+    <section class="container">
+        <!-- Stats Cards -->
+        <div class="grid grid-3" style="margin-top: 2rem;">
+            <div class="stat-card">
+                <span class="stat-number">{{ reports|length }}</span>
+                <span class="stat-label">Total Incidents</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ high_risk_count }}</span>
+                <span class="stat-label">High Severity</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ medium_risk_count }}</span>
+                <span class="stat-label">Medium Severity</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ low_risk_count }}</span>
+                <span class="stat-label">Low Severity</span>
+            </div>
+        </div>
+
+        <!-- Charts -->
+      <!-- Charts -->
+<div class="grid grid-2" style="margin: 3rem 0;">
+    <div class="card">
+        <h3>📊 Your Reported Incidents by Type</h3>
+        {% if incident_types|length > 0 %}
+            <canvas id="incidentTypeChart"></canvas>
+        {% else %}
+            <p>No incident reports yet to display.</p>
+        {% endif %}
+    </div>
+    <div class="card">
+        <h3>🗂️ Severity Breakdown</h3>
+        <canvas id="severityChart"></canvas>
+    </div>
+</div>
+
+
+        <!-- Reports List -->
+        <section style="margin: 3rem 0;">
+            <h2 style="text-align: center; color: var(--primary-pink); margin-bottom: 2rem;">All Submitted Reports</h2>
+            <div class="grid grid-2">
+            {% if reports %}
+                {% for r in reports %}
+<div class="report-card">
+    <p><strong>Incident:</strong> {{ r.incident_type }}</p>
+    <p><strong>Location:</strong> {{ r.location }}</p>
+    <p><strong>Date & Time:</strong> {{ r.date_time }}</p>
+    <p><strong>Severity:</strong> {{ r.severity }}</p>
+    <p><strong>Description:</strong> {{ r.description }}</p>
+    <p><strong>Witnesses:</strong> {{ r.witnesses }}</p>
+    <p><strong>Anonymous:</strong> {{ "Yes" if r.anonymous else "No" }}</p>
+    <p><strong>Follow Up:</strong> {{ "Yes" if r.follow_up else "No" }}</p>
+    <p><strong>Shared with Community:</strong> {{ "Yes" if r.share_community else "No" }}</p>
+    <p><em>Submitted on: {{ r.created_at }}</em></p>
+
+    <!-- Download Button -->
+    <a href="{{ url_for('download_report', report_id=r.id) }}" class="btn" style="margin-top:10px;">Download PDF</a>
+</div>
+{% endfor %}
+
+            {% else %}
+                <p class="empty">No reports submitted yet.</p>
+            {% endif %}
+            </div>
+        </section>
+    </section>
+
+    <!-- Emergency Button -->
+    <a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>Safety Resources</h3>
+                <ul>
+                    <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                    <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                    <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                    <li><a href="news.html">Safety News</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Platform</h3>
+                <ul>
+                    <li><a href="{{ url_for('features') }}">Features</a></li>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                    <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                    <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                    <li><a href="partners.html">Partners</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="{{ url_for('about') }}">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SakhiSecure. All rights reserved. | Protecting women through technology.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Incident Type Chart
+    const incidentTypes = {{ incident_types|tojson }};
+    const incidentCounts = {{ incident_counts|tojson }};
+    if(incidentTypes.length > 0 && incidentCounts.length > 0){
+        const ctxType = document.getElementById('incidentTypeChart').getContext('2d');
+        new Chart(ctxType, {
+            type: 'bar',
+            data: {
+                labels: incidentTypes,
+                datasets: [{
+                    label: 'Number of Reports',
+                    data: incidentCounts,
+                    backgroundColor: '#ed5c8d',
+                    borderColor: 'white',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    // Severity Chart
+    const severityCtx = document.getElementById('severityChart').getContext('2d');
+    new Chart(severityCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['High','Medium','Low'],
+            datasets: [{
+                data: [{{ high_risk_count }}, {{ medium_risk_count }}, {{ low_risk_count }}],
+               backgroundColor: [
+    '#ff6b81', // bright pink (High severity)
+    '#ff92a1', // soft pink (Medium severity)
+    '#ffc1d3'  // very light pink (Low severity)
+]
+,
+                borderColor: '#fff',
+                borderWidth: 2
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: true, position: 'bottom' } } }
+    });
+});
+</script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

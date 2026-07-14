@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe Route Finder — SakhiSecure</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+
+<style>
+  #map {
+    height: 500px;
+    width: 100%;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    margin: 2rem 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  .route-form {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .route-form h3 {
+    color: var(--primary-pink);
+    margin-bottom: 1rem;
+  }
+  .btn {
+    background: var(--primary-pink, #e91e63);
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: #d81b60;
+  }
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+    <a href="{{ url_for('index') }}" class="logo">
+        SakhiSecure
+        <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+    </a>
+    <ul class="nav-menu">
+        <li><a href="{{ url_for('index') }}" class="nav-link active">Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+        <li><a href="{{ url_for('report') }}">Report</a></li>
+        <li><a href="{{ url_for('resources') }}">Resources</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+    </ul>
+    <button class="mobile-toggle">☰</button>
+</nav>
+<style>
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #f3f0f2;
+    text-decoration: none;
+    margin-left: -60px;
+}
+.logo-img {
+    width: 55px;
+    height: 55px;
+    margin-left: 6px;
+    object-fit: contain;
+}
+nav a.logo:hover { opacity: 0.9; }
+</style>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container">
+    <h1>Find the Safest Route</h1>
+    <p>Detect your location and click on the map to set a destination.</p>
+  </div>
+</section>
+
+<div class="route-form">
+  <h3>Plan Your Route</h3>
+  <button id="locateBtn" class="btn">📍 Use My Location</button>
+  <p style="margin-top:1rem;">Then click anywhere on the map to set your destination.</p>
+</div>
+
+<div class="container">
+  <div id="map"></div>
+</div>
+
+<div class="route-form" id="route-info" style="display:none; margin-top:1rem;">
+  <h3>Safest Route Summary</h3>
+  <p><strong>From:</strong> <span id="start-point">-</span></p>
+  <p><strong>To:</strong> <span id="end-point">-</span></p>
+  <p><strong>Safest Route:</strong> <span id="safest-route">Calculating...</span></p>
+</div>
+</main>
+
+<a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+
+<footer>
+<div class="footer-content">
+    <div class="footer-grid">
+        <div class="footer-section">
+            <h3>Safety Resources</h3>
+            <ul>
+                <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                <li><a href="{{ url_for('news') }}">Safety News</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Platform</h3>
+            <ul>
+                <li><a href="{{ url_for('features') }}">Features</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Community</h3>
+            <ul>
+                <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                <li><a href="{{ url_for('partners') }}">Partners</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 SakhiSecure. All rights reserved. | Protecting women through technology.</p>
+    </div>
+</div>
+</footer>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
+
+<script>
+const map = L.map('map').setView([28.6139, 77.2090], 13); // Default: New Delhi
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+let userLocation = null;
+let destination = null;
+let routeControl = null;
+let userMarker = null;
+let destMarker = null;
+
+document.getElementById('locateBtn').addEventListener('click', () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      userLocation = [pos.coords.latitude, pos.coords.longitude];
+      if (userMarker) map.removeLayer(userMarker);
+      userMarker = L.marker(userLocation, {title: "Your Location"}).addTo(map);
+      map.setView(userLocation, 14);
+      alert("✅ Location detected! Now click on the map to set your destination.");
+    }, () => { alert("❌ Unable to fetch your location."); });
+  } else { alert("❌ Geolocation not supported."); }
+});
+
+function addRoute(start, end) {
+  if (routeControl) map.removeControl(routeControl);
+
+  routeControl = L.Routing.control({
+    waypoints: [ L.latLng(start[0], start[1]), L.latLng(end[0], end[1]) ],
+    router: L.Routing.osrmv1({ serviceUrl: "https://router.project-osrm.org/route/v1" }),
+    showAlternatives: true,
+    altLineOptions: [
+      { styles: [{color: "green", opacity: 0.8, weight: 5}] },
+      { styles: [{color: "blue", opacity: 0.8, weight: 5}] },
+      { styles: [{color: "red", opacity: 0.8, weight: 5}] }
+    ],
+    addWaypoints: false,
+    draggableWaypoints: false,
+    routeWhileDragging: false,
+    createMarker: () => null
+  }).on('routesfound', function(e) {
+    const safest = e.routes[0];
+    document.getElementById("start-point").textContent = `${start[0].toFixed(4)}, ${start[1].toFixed(4)}`;
+    document.getElementById("end-point").textContent = `${end[0].toFixed(4)}, ${end[1].toFixed(4)}`;
+    document.getElementById("safest-route").textContent = `${(safest.summary.totalDistance/1000).toFixed(2)} km, ~${Math.round(safest.summary.totalTime/60)} mins`;
+    document.getElementById("route-info").style.display = "block";
+  }).addTo(map);
+}
+
+map.on('click', e => {
+  if (!userLocation) { alert("⚠️ Please detect your location first."); return; }
+  destination = [e.latlng.lat, e.latlng.lng];
+  if (destMarker) map.removeLayer(destMarker);
+  destMarker = L.marker(destination, {title: "Destination"}).addTo(map);
+  addRoute(userLocation, destination);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nearby Police & Help Centers — SakhiSecure</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+    .hero-map {
+        background: var(--light-pink);
+        padding: 4rem 0;
+        text-align: center;
+        height: 300px;
+    }
+    .hero-map h1 {
+        font-size: 2.7rem;
+        color: var(--dark-pink);
+        margin-bottom: 1rem;
+    }
+    .hero-map p {
+        font-size: 1.3rem;
+        color: var(--b);
+        margin-bottom: 2rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #map {
+        height: 500px;
+        width: 100%;
+        border-radius: 12px;
+        border: 2px solid var(--border-color);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        margin: 2rem 0;
+    }
+    .station-btn {
+        background: var(--primary-pink);
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        transition: all 0.3s ease;
+    }
+    .station-btn:hover {
+        background: var(--dark-pink);
+        box-shadow: 0 4px 10px rgba(233, 30, 99, 0.3);
+    }
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+    <a href="{{ url_for('index') }}" class="logo">
+        SakhiSecure
+        <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+    </a>
+    <ul class="nav-menu">
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+        <li><a href="{{ url_for('report') }}">Report</a></li>
+       <a href="{{ url_for('help_page') }}" class="nav-link active">Help Center</a>
+
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+    </ul>
+    <button class="mobile-toggle">☰</button>
+</nav>
+<style>
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #f3f0f2;
+        text-decoration: none;
+        margin-left: -60px;
+    }
+    .logo-img {
+        width: 55px;
+        height: 55px;
+        margin-left: 6px;
+        object-fit: contain;
+    }
+    nav a.logo:hover { opacity: 0.9; }
+</style>
+</header>
+
+<main>
+<section class="hero-map">
+    <h1>Nearby Police & Help Centers</h1>
+    <p>Find the closest police stations and women help centers and get directions instantly.</p>
+</section>
+
+<div class="container">
+    <div id="map"></div>
+</div>
+
+<section class="resources-section" style="padding: 3rem 0; background: #fff5f8;">
+  <div class="container">
+    <h2 style="text-align: center; color: var(--dark-pink); margin-bottom: 2rem;">Assistance & Resources</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>📞 Emergency Helplines</h3>
+        <p>Dial <b>112</b> (women’s helpline) or <b>1091</b> (police). For medical emergencies, dial <b>108</b>.</p>
+      </div>
+      <div class="card">
+        <h3>🏥 Health & Wellness</h3>
+        <p>Find nearby hospitals, clinics, and women’s health centers for urgent medical care and regular checkups.</p>
+      </div>
+      <div class="card">
+        <h3>🧘‍♀️ Mental Health & Emotional Support</h3>
+        <p>24×7 helplines like <b>KIRAN (9152987821)</b> provide support for stress, depression, and emotional well-being.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="margin: 4rem 0;">
+<h2 style="text-align: center; color: var(--primary-pink); margin-bottom: 3rem;">Mental Health & Emotional Support</h2>
+<div class="grid grid-2">
+    <div class="card">
+        <h3>📞 24×7 Helplines</h3>
+        <ul>
+            <li><strong>National Mental Health Helpline (India):</strong> 1800-599-0019</li>
+            <li><strong>iCALL (TISS Counselling):</strong> +91 9152987821</li>
+            <li><strong>Vandrevala Foundation Helpline:</strong> 9999 666 555</li>
+            <li><strong>AASRA (Suicide Prevention):</strong> +91 9820466726</li>
+        </ul>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">Available 24×7 for stress, depression, or suicidal thoughts.</p>
+    </div>
+    <div class="card">
+        <h3>💬 Anonymous Chat & Counseling</h3>
+        <ul>
+            <li><a href="https://icallhelpline.org/" target="_blank">iCALL Online Counselling</a></li>
+            <li><a href="https://www.7cups.com/" target="_blank">7 Cups (Free Online Therapy & Chat)</a></li>
+            <li><a href="https://vandrevalafoundation.com/" target="_blank">Vandrevala Foundation Chat</a></li>
+            <li><a href="https://www.fortismentalhealth.com/" target="_blank">Fortis Mental Health Chat</a></li>
+        </ul>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">Connect anonymously with trained counselors and support groups.</p>
+    </div>
+</div>
+</section>
+
+<a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+</main>
+
+<footer>
+<div class="footer-content">
+    <div class="footer-grid">
+        <div class="footer-section">
+            <h3>Safety Resources</h3>
+            <ul>
+                <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+
+                <li><a href="{{ url_for('news') }}">Safety News</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Platform</h3>
+            <ul>
+                <li><a href="{{ url_for('features') }}">Features</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Community</h3>
+            <ul>
+                <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                <li><a href="{{ url_for('partners') }}">Partners</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 SakhiSecure. All rights reserved. | Protecting women through technology.</p>
+    </div>
+</div>
+</footer>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.min.js"></script>
+<script>
+const map = L.map('map').fitWorld();
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+map.locate({setView: true, maxZoom: 16});
+
+function onLocationFound(e) {
+    const userLatLng = e.latlng;
+
+    L.marker(userLatLng).addTo(map).bindPopup("You are here").openPopup();
+
+    const policeQuery = `[out:json][timeout:25];node["amenity"="police"](around:5000,${userLatLng.lat},${userLatLng.lng});out body qt 5;`;
+    const helpQuery = `[out:json][timeout:25];node["social_facility"="women_shelter"](around:5000,${userLatLng.lat},${userLatLng.lng});out body qt 5;`;
+
+    function addMarkers(data, label) {
+        data.elements.forEach(station => {
+            const marker = L.marker([station.lat, station.lon], {title: station.tags.name || label}).addTo(map);
+            marker.bindPopup(`<b>${station.tags.name || label}</b><br><button class="station-btn" onclick="getRoute(${station.lat}, ${station.lon})">Get Directions</button>`);
+        });
+    }
+
+    fetch('https://overpass-api.de/api/interpreter', {method: 'POST', body: policeQuery})
+        .then(res => res.json()).then(data => addMarkers(data, 'Police Station')).catch(err => console.error(err));
+    fetch('https://overpass-api.de/api/interpreter', {method: 'POST', body: helpQuery})
+        .then(res => res.json()).then(data => addMarkers(data, 'Women Help Center')).catch(err => console.error(err));
+}
+
+map.on('locationfound', onLocationFound);
+map.on('locationerror', function(e){ alert("Unable to get your location. Please allow location access."); });
+
+let routeControl;
+function getRoute(destLat, destLng) {
+    if (routeControl) map.removeControl(routeControl);
+    routeControl = L.Routing.control({
+        waypoints: [map.getCenter(), L.latLng(destLat, destLng)],
+        routeWhileDragging: false,
+        lineOptions: {styles: [{color: '#ff69b4', opacity: 0.8, weight: 5}]},
+        createMarker: function(i, wp) {
+            if (i === 0) return L.marker(wp.latLng, {icon: L.icon({iconUrl: 'https://cdn-icons-png.flaticon.com/512/64/64113.png', iconSize: [25, 41]})}).bindPopup('You are here');
+            else return L.marker(wp.latLng, {icon: L.icon({iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', iconSize: [25, 41]})});
+        }
+    }).addTo(map);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SakhiSecure — Emotion Journal</title>
+  <meta name="description" content="Track your emotional well-being and safety experiences using AI-powered sentiment and distress analysis.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+  <style>
+    main {
+      margin-top: 100px;
+      padding: 2rem;
+    }
+    .journal-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .journal-container h1 {
+      text-align: center;
+      color: var(--primary-pink);
+      margin-bottom: 1.5rem;
+    }
+    form textarea {
+      width: 100%;
+      height: 150px;
+      resize: none;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+    }
+    form button {
+      display: block;
+      margin: 1.2rem auto 0;
+      padding: 0.8rem 2rem;
+      background: var(--primary-pink);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    form button:hover {
+      background: #c2185b;
+    }
+    .sentiment-result {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent-pink);
+    }
+    .history-section, .ai-detection-section {
+      margin-top: 2.5rem;
+    }
+    .history-section h2, .ai-detection-section h2 {
+      color: var(--primary-pink);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .history-entry {
+      background: #fef6f9;
+      border-left: 4px solid var(--primary-pink);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+    .history-entry .date {
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    /* New AI Detection Section Styles */
+    .ai-detection-card {
+      background: #fff3f7;
+      border-left: 4px solid var(--primary-pink);
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+    .ai-detection-card:hover {
+      background: #fdeaf1;
+      transform: translateY(-2px);
+    }
+    .ai-detection-card h3 {
+      color: var(--primary-pink);
+      margin-bottom: 0.5rem;
+    }
+    .ai-detection-card p {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .status {
+      margin-top: 0.5rem;
+      font-weight: bold;
+      color: #444;
+    }
+    .status span.safe {
+      color: green;
+    }
+    .status span.warning {
+      color: #ff9800;
+    }
+    .status span.alert {
+      color: red;
+    }
+
+    .mic-btn {
+      display: inline-block;
+      background: var(--primary-pink);
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 0.6rem;
+      transition: 0.3s;
+    }
+    .mic-btn:hover {
+      background: #c2185b;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <nav>
+        <a href="{{ url_for('index') }}" class="logo">
+            SakhiSecure
+            <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+        </a>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('dashboard') }}" class="nav-link active">Dashboard</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('report') }}">Report</a></li>
+            <li><a href="{{ url_for('resources') }}">Resources</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+        <button class="mobile-toggle">☰</button>
+    </nav>
+    <style>
+        .logo { display: flex; align-items: center; font-size: 2.2rem; font-weight: bold; color: #f3f0f2; text-decoration: none; margin-left: -60px; }
+        .logo-img { width: 55px; height: 55px; margin-left: 6px; object-fit: contain; }
+        nav a.logo:hover { opacity: 0.9; }
+    </style>
+  </header>
+
+  <main>
+    <div class="journal-container">
+      <h1>💖 Emotion Journal</h1>
+      <p style="text-align:center; color:#666;">
+        Log your daily experiences and feelings. Our AI will analyze your tone to track stress and positivity patterns over time.
+      </p>
+
+      <!-- Emotion Log Form -->
+      <form id="emotionForm">
+        <label for="entry"><strong>How was your day?</strong></label>
+        <textarea id="entry" name="entry" placeholder="Write about your day..."></textarea>
+        <button type="submit">Analyze Emotion</button>
+      </form>
+
+      <div id="sentimentResult" class="sentiment-result"></div>
+
+      <!-- AI-Based Distress Detection Section -->
+      <div class="ai-detection-section">
+        <h2>🤖 AI-Based Distress Detection</h2>
+
+        <div class="ai-detection-card">
+          <h3>🎙️ Voice Emotion Recognition</h3>
+          <p>Detects distress tone in calls or background noise using AI — analyzing raised pitch, panic keywords, or changes in speech speed.</p>
+          <button class="mic-btn" id="voiceCheckBtn">🎤 Start Voice Check</button>
+          <div class="status">Status: <span id="voiceStatus" class="safe">Calm detected</span></div>
+        </div>
+
+        <div class="ai-detection-card">
+          <h3>📱 Behavior Pattern Analysis</h3>
+          <p>Monitors device motion for sudden stops, running, or falls — triggering alerts automatically if unusual activity is detected.</p>
+          <div class="status">Status: <span id="motionStatus" class="safe">Normal movement</span></div>
+        </div>
+
+        <div class="ai-detection-card">
+          <h3>⚠️ Predictive Alerts</h3>
+          <p>Predicts potential risks — such as regular travel through low-safety zones or negative emotional trends — to send pre-emptive warnings.</p>
+          <div class="status">Prediction: <span id="alertStatus" class="warning">Moderate risk trend detected — review your routes</span></div>
+        </div>
+      </div>
+
+      <!-- Past Journal History -->
+      <div class="history-section">
+        <h2>Your Past Entries</h2>
+        <div id="journalHistory">
+          <div class="history-entry">
+            <p>"I felt confident walking home today after seeing more patrols nearby."</p>
+            <div class="date">🗓️ October 8, 2025 — Sentiment: 😊 Positive</div>
+          </div>
+          <div class="history-entry">
+            <p>"I was anxious returning late; the streets were poorly lit."</p>
+            <div class="date">🗓️ October 7, 2025 — Sentiment: 😟 Negative</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-section">
+            <h3>Safety Resources</h3>
+            <ul>
+                <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                <li><a href="{{ url_for('news') }}">Safety News</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Platform</h3>
+            <ul>
+                <li><a href="{{ url_for('features') }}">Features</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Community</h3>
+            <ul>
+                <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                <li><a href="{{ url_for('partners') }}">Partners</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+            </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+          <p>&copy; 2025 SakhiSecure. All rights reserved. | Protecting women through technology.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const form = document.getElementById('emotionForm');
+    const result = document.getElementById('sentimentResult');
+    const voiceBtn = document.getElementById('voiceCheckBtn');
+    const voiceStatus = document.getElementById('voiceStatus');
+    const motionStatus = document.getElementById('motionStatus');
+
+    // Journal emotion analysis
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const entry = document.getElementById('entry').value.trim();
+      if (!entry) return alert("Please write something!");
+
+      const positiveWords = ["happy","safe","good","calm","confident"];
+      const negativeWords = ["scared","unsafe","sad","worried","anxious"];
+      let score = 0;
+
+      positiveWords.forEach(word => { if (entry.toLowerCase().includes(word)) score++; });
+      negativeWords.forEach(word => { if (entry.toLowerCase().includes(word)) score--; });
+
+      if (score > 0) result.innerHTML = "😊 You seem positive today. Keep it up!";
+      else if (score < 0) result.innerHTML = "😟 You seem a bit stressed. Try some relaxation or call a friend.";
+      else result.innerHTML = "😐 Neutral mood detected. Stay mindful and care for yourself.";
+    });
+
+    // Simulated Voice Emotion Recognition
+    voiceBtn.addEventListener('click', () => {
+      voiceStatus.textContent = "Listening...";
+      voiceStatus.className = "warning";
+      setTimeout(() => {
+        const random = Math.random();
+        if (random < 0.3) {
+          voiceStatus.textContent = "Distress tone detected!";
+          voiceStatus.className = "alert";
+          alert("⚠️ Distress detected! Sending alert to your guardian.");
+        } else {
+          voiceStatus.textContent = "Calm tone detected";
+          voiceStatus.className = "safe";
+        }
+      }, 3000);
+    });
+
+    // Simulated motion detection
+    window.addEventListener('devicemotion', (event) => {
+      const acceleration = Math.abs(event.accelerationIncludingGravity.x) +
+                           Math.abs(event.accelerationIncludingGravity.y) +
+                           Math.abs(event.accelerationIncludingGravity.z);
+      if (acceleration > 50) {
+        motionStatus.textContent = "⚠️ Sudden movement detected!";
+        motionStatus.className = "alert";
+      }
+    });
+  </script>
+</body>
+</html>

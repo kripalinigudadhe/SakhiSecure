@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Alerts & Neighborhood Watch</title>
+<meta name="description" content="Connect with local women, share safety alerts, and build a supportive community network for collective protection.">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}" class="logo">
+            SakhiSecure
+            <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+        </a>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('report') }}">Report</a></li>
+            <li><a href="{{ url_for('community') }}" class="nav-link active">Community</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+        <button class="mobile-toggle">☰</button>
+    </nav>
+    <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #f3f0f2;
+            text-decoration: none;
+            margin-left: -60px;
+        }
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            margin-left: 6px;
+            object-fit: contain;
+        }
+        nav a.logo:hover { opacity: 0.9; }
+    </style>
+</header>
+
+<main>
+<section class="hero">
+    <div class="container">
+        <h1>Community Safety Network</h1>
+        <p>Connect with local women, share alerts, and build a safer community together</p>
+    </div>
+</section>
+
+<section class="container">
+    <!-- Community Stats -->
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <span class="stat-number">2,847</span>
+            <span class="stat-label">Active Community Members</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">156</span>
+            <span class="stat-label">Safety Alerts This Week</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">89%</span>
+            <span class="stat-label">Members Feel Safer</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">Community Support</span>
+        </div>
+    </div>
+
+    <!-- Alerts & Discussions -->
+    <div class="grid grid-2" style="margin: 3rem 0; align-items: start;">
+        <div>
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3 style="color: var(--primary-pink);">🚨 Recent Community Alerts</h3>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <div class="alert alert-warning" style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <strong>⚠️ Caution: Connaught Place Metro</strong><br>
+                                Increased harassment reports near platform 2. Avoid traveling alone after 8 PM.
+                                <br><small>Posted by Sarah M. • 2 hours ago • 0.8 km away</small>
+                            </div>
+                            <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;">Confirm</button>
+                        </div>
+                    </div>
+                    <div class="alert alert-info" style="margin: 1rem 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <strong>💡 Safety Tip: Khan Market</strong><br>
+                                Well-lit walking group forming at 7 PM from Khan Market Metro. Join us for safe commute!
+                                <br><small>Posted by Priya K. • 4 hours ago • 1.2 km away</small>
+                            </div>
+                            <button class="btn" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;">Join</button>
+                        </div>
+                    </div>
+                    <!-- Add more alerts here -->
+                </div>
+                <button class="btn" style="width: 100%; margin-top: 1rem;">Post Community Alert</button>
+            </div>
+        </div>
+
+        <div>
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3 style="color: var(--primary-pink);">💬 Community Discussions</h3>
+                <div style="margin: 1.5rem 0;">
+                    <div style="border-left: 4px solid var(--primary-pink); padding-left: 1rem; margin: 1rem 0;">
+                        <h4>Safe jogging routes in the morning?</h4>
+                        <p style="color: var(--text-light);">Looking for recommendations for safe morning jogging routes in South Delhi area...</p>
+                        <small>Started by Sarah M. • 8 replies • 2 hours ago</small>
+                        <div style="margin-top: 0.5rem;">
+                            <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;">Join Discussion</button>
+                        </div>
+                    </div>
+                    <!-- More discussions here -->
+                </div>
+                <button class="btn btn-secondary" style="width: 100%;">Start New Discussion</button>
+            </div>
+
+            <div class="card">
+                <h3 style="color: var(--primary-pink);">👥 Local Safety Groups</h3>
+                <div style="margin: 1.5rem 0;">
+                    <div style="background: var(--soft-pink); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h4>South Delhi Safety Circle</h4>
+                        <p>347 members • Focus: Lajpat Nagar, Khan Market, Green Park</p>
+                        <button class="btn" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;">Join Group</button>
+                    </div>
+                    <!-- More groups here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Community Features -->
+    <section style="margin: 4rem 0;">
+        <h2 style="text-align: center; color: var(--primary-pink); margin-bottom: 3rem;">Community Features</h2>
+        <div class="grid grid-3">
+            <div class="card">
+                <h3>🗺️ Neighborhood Watch</h3>
+                <p>Real-time alerts and updates from women in your area about safety concerns and incidents.</p>
+                <ul style="margin: 1rem 0;">
+                    <li>Location-based alerts</li>
+                    <li>Verified community reports</li>
+                    <li>Anonymous posting options</li>
+                    <li>Emergency broadcast system</li>
+                </ul>
+                <button class="btn btn-secondary">View Map</button>
+            </div>
+            <div class="card">
+                <h3>👭 Buddy System</h3>
+                <p>Connect with other women for safe travel, walking groups, and mutual support.</p>
+                <ul style="margin: 1rem 0;">
+                    <li>Find travel companions</li>
+                    <li>Join walking groups</li>
+                    <li>Emergency contact network</li>
+                    <li>Verified member profiles</li>
+                </ul>
+                <button class="btn btn-secondary">Find Buddies</button>
+            </div>
+            <div class="card">
+                <h3>📚 Knowledge Sharing</h3>
+                <p>Share safety tips, experiences, and resources with the community.</p>
+                <ul style="margin: 1rem 0;">
+                    <li>Safety tip exchanges</li>
+                    <li>Resource recommendations</li>
+                    <li>Experience sharing</li>
+                    <li>Expert advice sessions</li>
+                </ul>
+                <button class="btn btn-secondary">Share Knowledge</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Impact -->
+    <section class="card" style="margin: 4rem 0;">
+        <h2 style="color: var(--primary-pink); margin-bottom: 2rem;">📊 Community Impact</h2>
+        <div class="grid grid-4">
+            <div style="text-align: center;">
+                <div style="font-size: 2.5rem; color: var(--primary-pink); margin-bottom: 0.5rem;">2,847</div>
+                <p><strong>Active Members</strong></p>
+                <small>Growing community network</small>
+            </div>
+            <!-- More stats -->
+        </div>
+    </section>
+
+    <!-- Join Community -->
+    <section class="card" style="margin: 4rem 0; text-align: center;">
+        <h2 style="color: var(--primary-pink); margin-bottom: 1rem;">Join Our Community</h2>
+        <p style="font-size: 1.1rem; margin-bottom: 2rem;">Be part of a supportive network that prioritizes women's safety and empowerment.</p>
+        <div>
+            <a href="{{ url_for('signup') }}" class="btn">Create Account</a>
+            <a href="{{ url_for('volunteer') }}" class="btn btn-secondary">Become a Volunteer</a>
+            <a href="{{ url_for('report') }}" class="btn btn-secondary">Report Incident</a>
+        </div>
+    </section>
+
+    <a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+</section>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>Safety Resources</h3>
+                <ul>
+                    <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                    <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                    <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+                    <li><a href="{{ url_for('news') }}">Safety News</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Platform</h3>
+                <ul>
+                    <li><a href="{{ url_for('features') }}">Features</a></li>
+                    <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                    <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                    <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                    <li><a href="{{ url_for('partners') }}">Partners</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                    <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+                    <li><a href="{{ url_for('about') }}">About Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 SakhiSecure. All rights reserved. | Protecting women through technology.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

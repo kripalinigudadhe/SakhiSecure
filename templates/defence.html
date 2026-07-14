@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defence Poses — Self-Protection for Women</title>
+<meta name="description" content="Step-by-step self-defence poses and techniques every woman can use to stay safe and confident.">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="{{ url_for('index') }}" class="logo">
+            SakhiSecure
+            <img src="{{ url_for('static', filename='images/logo-removebg-preview.png') }}" alt="Logo" class="logo-img">
+        </a>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+            <li><a href="{{ url_for('report') }}">Report</a></li>
+            <li><a href="{{ url_for('defence') }}" class="nav-link active">Defence</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+        </ul>
+        <button class="mobile-toggle">☰</button>
+    </nav>
+    <style>
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #f3f0f2;
+            text-decoration: none;
+            margin-left: -60px;
+        }
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            margin-left: 6px;
+            object-fit: contain;
+        }
+        nav a.logo:hover { opacity: 0.9; }
+    </style>
+</header>
+
+<main>
+<section class="hero">
+    <div class="container">
+        <h1>Empower Yourself with Self-Defence</h1>
+        <p>Learn essential defence poses and techniques to protect yourself in real-life situations. Focus on creating space, escaping, and seeking help.</p>
+    </div>
+</section>
+
+<section class="container">
+    <div class="alert alert-info" style="margin: 2rem 0;">
+        <strong>⚠️ Note:</strong> These defence poses are for <strong>self-protection only</strong>. Use them to escape or seek help, not to escalate violence.
+    </div>
+
+    <h2 style="text-align:center; margin:2rem 0; color: var(--primary-pink);">💪 Essential Self-Defence Poses</h2>
+
+    <!-- 3-Up 3-Down Grid -->
+    <div class="feature-grid">
+        <div class="feature">
+            <img src="{{ url_for('static', filename='images/defensive.png') }}" alt="Defensive stance" style="width:100%; border-radius:10px; margin-bottom:1rem;">
+            <h4>Defensive Stance</h4>
+            <p>Feet shoulder-width apart, hands up, knees slightly bent. Stay balanced and ready to react.</p>
+        </div>
+        <div class="feature">
+            <img src="{{ url_for('static', filename='images/palm.png') }}" alt="Palm strike" style="width:100%; border-radius:10px; margin-bottom:1rem;">
+            <h4>Palm Strike</h4>
+            <p>Strike upwards with the heel of your palm to the attacker’s chin or nose — safe and effective.</p>
+        </div>
+        <div class="feature">
+            <img src="{{ url_for('static', filename='images/knee.png') }}" alt="Knee strike" style="width:100%; border-radius:10px; margin-bottom:1rem;">
+            <h4>Knee Strike</h4>
+            <p>Drive your knee into the attacker’s stomach or groin when grabbed. Quick and powerful.</p>
+        </div>
+        <div class="feature">
+            <img src="{{ url_for('static', filename='images/elbow.png') }}" alt="Elbow strike" style="width:100%; border-radius:10px; margin-bottom:1rem;">
+            <h4>Elbow Strike</h4>
+            <p>Close-range move. Swing your elbow into ribs, stomach, or face to break free.</p>
+        </div>
+        <div class="feature">
+            <img src="{{ url_for('static', filename='images/wrist.png') }}" alt="Wrist release" style="width:100%; border-radius:10px; margin-bottom:1rem;">
+            <h4>Wrist Release</h4>
+            <p>If grabbed by the wrist, rotate toward the attacker’s thumb and pull sharply to escape.</p>
+        </div>
+        <div class="feature">
+            <img src="{{ url_for('static', filename='images/kick.png') }}" alt="Front kick" style="width:100%; border-radius:10px; margin-bottom:1rem;">
+            <h4>Front Kick</h4>
+            <p>Kick hard with the ball of your foot to the attacker’s shin, knee, or groin to push them away.</p>
+        </div>
+    </div>
+
+    <section style="margin:3rem 0;">
+        <h2 style="text-align:center; color: var(--primary-pink);">⚡ Quick Defence Tips</h2>
+        <div class="grid grid-2">
+            <div class="card">
+                <ul>
+                    <li>Shout loudly to draw attention 🚨</li>
+                    <li>Target vulnerable areas: eyes, nose, groin, knees</li>
+                    <li>Focus on escaping, not fighting</li>
+                    <li>Use your strongest parts: elbows, knees, legs</li>
+                </ul>
+            </div>
+            <div class="card">
+                <ul>
+                    <li>Stay balanced and maintain distance</li>
+                    <li>Practice regularly to build confidence</li>
+                    <li>Use everyday objects (keys, bag, umbrella) as shields</li>
+                    <li>Trust your instincts—act quickly</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="card" style="margin:4rem 0; text-align:center;">
+        <h2 style="color: var(--primary-pink); margin-bottom:1rem;">💡 Empower Yourself</h2>
+        <p style="font-size:1.1rem; margin-bottom:2rem;">Join a certified self-defence class to practice these moves safely.</p>
+        <a href="{{ url_for('resources') }}" class="btn">Find Resources</a>
+        <a href="{{ url_for('community') }}" class="btn btn-secondary">Join Community</a>
+    </section>
+</section>
+
+<a href="{{ url_for('alert') }}" class="emergency-btn" title="Emergency Alert">🚨</a>
+</main>
+
+<footer>
+<div class="footer-content">
+    <div class="footer-grid">
+        <div class="footer-section">
+            <h3>Safety Resources</h3>
+            <ul>
+                <li><a href="{{ url_for('resources') }}">Emergency Contacts</a></li>
+                <li><a href="{{ url_for('prevention') }}">Prevention Tips</a></li>
+                <li><a href="{{ url_for('defence') }}">Defence Poses</a></li>
+                <li><a href="{{ url_for('faq') }}">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Platform</h3>
+            <ul>
+                <li><a href="{{ url_for('features') }}">Features</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('analytics') }}">Analytics</a></li>
+                <li><a href="{{ url_for('report') }}">Report Incident</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Community</h3>
+            <ul>
+                <li><a href="{{ url_for('community') }}">Local Alerts</a></li>
+                <li><a href="{{ url_for('volunteer') }}">Volunteer</a></li>
+                <li><a href="{{ url_for('partners') }}">Partners</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Legal</h3>
+            <ul>
+                <li><a href="{{ url_for('privacy') }}">Privacy Policy</a></li>
+                <li><a href="{{ url_for('terms') }}">Terms of Service</a></li>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 SakhiSecure. All rights reserved. | Empowering women through safety and strength.</p>
+    </div>
+</div>
+</footer>
+</body>
+</html>
